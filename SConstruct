@@ -48,7 +48,7 @@ if build_type == "":
     complexity = e.Command("complexity", Glob("src/*.c"), [
         "pmccabe -t -v $SOURCES"])
     
-    e.Depends(coverage, "test")
+    e.Depends(coverage, test_binary)
     e.Depends(complexity, coverage)
     e.Clean(test_binary, project_name + ".coverage")
     e.Clean(test_binary, "coverage")
