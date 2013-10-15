@@ -29,17 +29,22 @@ typedef struct test_cookie {
     unsigned int counter;
 } test_cookie_t;
 
-static void increment(test_cookie_t *cookie) {
+static void
+increment(test_cookie_t *cookie) {
     cookie->counter++;
 }
 
-static void triple(test_cookie_t *cookie) {
+static void
+triple(test_cookie_t *cookie) {
     cookie->counter *= 3;
 }
 
-static void reschedule(test_cookie_t *cookie) {
+static void
+reschedule(test_cookie_t *cookie) {
     cookie->counter++;
-    e3_timer_create(cookie->timers, 0, (e3_timer_function_t) reschedule, cookie);
+    
+    e3_timer_create(cookie->timers, 0,
+        (e3_timer_function_t) reschedule, cookie);
 }
 
 void

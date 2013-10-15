@@ -98,15 +98,15 @@ extern "C" {
 #endif
 
 typedef struct jasmine {
-    unsigned char state;
-    unsigned char group;
+    const char *reason;
+    unsigned short state;
+    unsigned short group;
     unsigned short current;
     unsigned short last;
     unsigned short passed;
     unsigned short failed;
     unsigned short ignored;
     unsigned short expects;
-    const char *reason;
 } jasmine_t;
 
 #ifdef __cplusplus
