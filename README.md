@@ -12,8 +12,10 @@ cd e3
 scons
 ~~~
 
-## Development guidelines
-- All development must be test-driven.
+## Coding guidelines
+- All source code should be as portable and strict as possible.
+- All source code should use (4) spaces instead of tabs.
+- Function modifiers and return types must be line separated from the function name and arguments.
 - There must be 100% line, function, and branch coverage.
 - No function may have a complexity higher than 3.
 - If a function or object can be simplified, it should be.
