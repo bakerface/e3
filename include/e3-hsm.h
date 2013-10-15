@@ -1,14 +1,28 @@
 /*
- * Copyright (c) 2013 - Christopher Baker - Confidential - All Rights Reserved
+ * Copyright (c) 2013 - Christopher M. Baker
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+ * sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
  *
  */
 
 #ifndef E3_HSM_H_
 #define E3_HSM_H_
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #define E3_PERMIT_NONE
 
@@ -95,6 +109,10 @@ extern "C" {
         E3_SUBSTATE_AS_FUNCTION, E3_PERMIT_AS_CASE)                 \
     HSM(E3_SIGNAL_AS_VOID, E3_STATE_AS_STRUCT,                      \
         E3_SUBSTATE_AS_STRUCT, E3_PERMIT_AS_VOID)
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef void (*e3_hsm_function_t)(void *cookie);
 typedef unsigned long e3_hsm_signal_t;
