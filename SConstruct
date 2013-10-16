@@ -31,6 +31,7 @@ e.Append(CPPPATH="include")
 
 e.Append(CCFLAGS="-ansi")
 e.Append(CCFLAGS="-ffreestanding")
+e.Append(CCFLAGS="-fmessage-length=0")
 e.Append(CCFLAGS="-nodefaultlibs")
 e.Append(CCFLAGS="-pedantic")
 e.Append(CCFLAGS="-pedantic-errors")
