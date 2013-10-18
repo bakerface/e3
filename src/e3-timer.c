@@ -62,8 +62,8 @@ e3_timer_tick(void) {
 }
 
 void
-e3_timer_create(e3_timer_t *timer,
-    e3_timer_ticks_t ticks, e3_timer_function_t function, void *cookie) {
+e3_timer_create(e3_timer_t *timer, e3_timer_ticks_t ticks,
+    e3_timer_function_t function, void *cookie) {
 
     timer->next = timers;
     timers = timer;

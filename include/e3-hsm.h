@@ -44,7 +44,7 @@
 #define E3_STATE_AS_DECLARATION(name, enter, exit, permit) \
     static const e3_hsm_state_t *                          \
     name##_transition(e3_hsm_signal_t signal);             \
-    static const e3_hsm_state_t * const name;
+    static const e3_hsm_state_t name[1];
 
 #define E3_SUBSTATE_AS_DECLARATION(parent, name, enter, exit, permit) \
     E3_STATE_AS_DECLARATION(name, enter, exit, permit)
@@ -74,24 +74,22 @@
 #define E3_PERMIT_AS_CASE(signal, state) case signal: return state;
 
 #define E3_STATE_AS_STRUCT(name, enter, exit, permit) \
-    static const e3_hsm_state_t name##_object = {     \
+    static const e3_hsm_state_t name[] = { {          \
         0,                                            \
         E3_ANCESTRY_##name,                           \
         name##_transition,                            \
         (e3_hsm_function_t) enter,                    \
         (e3_hsm_function_t) exit                      \
-    };                                                \
-    static const e3_hsm_state_t * const name = &name##_object;
+    } };
 
 #define E3_SUBSTATE_AS_STRUCT(parent, name, enter, exit, permit) \
-    static const e3_hsm_state_t name##_object = {                \
-        &parent##_object,                                        \
+    static const e3_hsm_state_t name[] = { {                     \
+        parent,                                                  \
         E3_ANCESTRY_##name,                                      \
         name##_transition,                                       \
         (e3_hsm_function_t) enter,                               \
         (e3_hsm_function_t) exit                                 \
-    };                                                           \
-    static const e3_hsm_state_t * const name = &name##_object;
+    } };
 
 #define E3_HSM_DEFINE(HSM)                                          \
     enum {                                                          \
@@ -101,7 +99,7 @@
             E3_SUBSTATE_AS_VOID, E3_PERMIT_AS_VOID)                 \
         HSM(E3_SIGNAL_AS_VOID, E3_STATE_AS_ANCESTRY_ENUM,           \
             E3_SUBSTATE_AS_ANCESTRY_ENUM, E3_PERMIT_AS_VOID)        \
-        E3_END_OF_ENUM                                              \
+        E3_END_OF_ENUM_##__LINE__                                   \
     };                                                              \
     HSM(E3_SIGNAL_AS_VOID, E3_STATE_AS_DECLARATION,                 \
         E3_SUBSTATE_AS_DECLARATION, E3_PERMIT_AS_VOID)              \
