@@ -199,7 +199,7 @@ e3_hsm_test(jasmine_t *jasmine) {
             jasmine_expect(jasmine, phone.voicemail_exited == 0);
         }
     
-        jasmine_it(jasmine, "cannot transition if a signal is undefined") {
+        jasmine_it(jasmine, "cannot transition if a signal is not permitted") {
             jasmine_expect(jasmine,
                 !e3_hsm_dispatch(&phone.hsm, PICK_UP));
             
