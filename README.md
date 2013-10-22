@@ -6,7 +6,7 @@ The goal of E3 is to provide a portable C framework with a tiny footprint.
 To run the tests, you will need to install scons.
 Scons is a replacement for make that takes a lot of the pain out of build scripts.
 
-~~~ bash
+~~~
 git clone https://github.com/bakerface/e3.git
 cd e3
 scons
