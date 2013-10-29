@@ -3,14 +3,21 @@ E3 is a minimalistic freestanding architecture intended to jump-start bare-metal
 The goal of E3 is to provide a portable C framework with a tiny footprint.
 
 ## Testing
-To run the tests, you will need to install scons.
-Scons is a replacement for make that takes a lot of the pain out of build scripts.
+The test suite is integrated into the build system.
+To run the tests, simply clone the repository and run make as follows:
 
 ~~~
 git clone https://github.com/bakerface/e3.git
 cd e3
-scons
+make
 ~~~
+
+There are additional build targets that you may specify.
+A few examples are:
+
+- 'archive' to create a static library of the source
+- 'complexity' to print the cyclomatic complexity statistics
+- 'coverage' to run the tests and generate code coverage statistics
 
 ## Coding guidelines
 - All source code should be as portable and strict as possible.
