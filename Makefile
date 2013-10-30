@@ -142,19 +142,19 @@ CCTOBJS  := $(CCFILES:.c=.to) \
             tests/e3-test.o
             
 CCTCOV   := $(CCTEST).cov
+GCOVOBJS := $(CCFILES:.c=.gcno) $(CCFILES:.c=.gcda)
 LIBS     := -lgcov
 
 all: coverage
 
 clean:
-	@rm -f $(CCTARGET) $(CCOBJS) $(CCTEST) $(CCTOBJS) $(CCTCOV)
+	@rm -f $(CCTARGET) $(CCOBJS) $(CCTEST) $(CCTOBJS) $(CCTCOV) $(GCOVOBJS)
 	@rm -rf coverage
 	
 archive: $(CCTARGET)
 
 coverage: $(CCTCOV)
 	@genhtml -o $@ $< >/dev/null
-	@rm -f src/*.gcno src/*.gcda
 
 complexity: $(CCFILES)
 	@pmccabe -v -c $^
