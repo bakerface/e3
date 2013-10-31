@@ -22,7 +22,7 @@
  */
 
 #include "e3-timer-test.h"
-#include <e3.h>
+#include <e3-timer.h>
 
 typedef struct test {
     e3_timer_t timer_1;

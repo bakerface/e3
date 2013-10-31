@@ -21,7 +21,7 @@
  *
  */
 
-#include <e3.h>
+#include <e3-timer.h>
 
 static e3_timer_t *timers = 0;
 static e3_timer_ticks_t pending_ticks = 0;

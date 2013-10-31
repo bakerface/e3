@@ -22,7 +22,7 @@
  */
 
 #include "e3-hsm-test.h"
-#include <e3.h>
+#include <e3-hsm.h>
 
 #define PHONE_HSM(SIGNAL, STATE, SUBSTATE, PERMIT)             \
     SIGNAL(PICK_UP)                                            \

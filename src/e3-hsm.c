@@ -21,7 +21,7 @@
  *
  */
 
-#include <e3.h>
+#include <e3-hsm.h>
 
 static void
 enter(e3_hsm_t *hsm, const e3_hsm_state_t * const state) {
