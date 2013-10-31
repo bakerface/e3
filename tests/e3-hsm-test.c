@@ -129,18 +129,18 @@ e3_hsm_test(jasmine_t *jasmine) {
     
     jasmine_describe(jasmine, "a hierarchical state machine") {
         jasmine_before(jasmine) {
-            phone.idle_entered = 0;
-            phone.idle_exited = 0;
-            phone.busy_entered = 0;
-            phone.busy_exited = 0;
-            phone.dialtone_entered = 0;
-            phone.dialtone_exited = 0;
-            phone.ringing_entered = 0;
-            phone.ringing_exited = 0;
-            phone.talking_entered = 0;
-            phone.talking_exited = 0;
+            phone.idle_entered      = 0;
+            phone.idle_exited       = 0;
+            phone.busy_entered      = 0;
+            phone.busy_exited       = 0;
+            phone.dialtone_entered  = 0;
+            phone.dialtone_exited   = 0;
+            phone.ringing_entered   = 0;
+            phone.ringing_exited    = 0;
+            phone.talking_entered   = 0;
+            phone.talking_exited    = 0;
             phone.voicemail_entered = 0;
-            phone.voicemail_exited = 0;
+            phone.voicemail_exited  = 0;
         }
 
         jasmine_after(jasmine) {
@@ -150,143 +150,143 @@ e3_hsm_test(jasmine_t *jasmine) {
         jasmine_it(jasmine, "can initialize to a child state") {
             e3_hsm_init(&phone.hsm, VOICEMAIL, &phone);
             
-            jasmine_expect(jasmine, phone.idle_entered == 0);
-            jasmine_expect(jasmine, phone.idle_exited == 0);
-            jasmine_expect(jasmine, phone.busy_entered == 1);
-            jasmine_expect(jasmine, phone.busy_exited == 0);
-            jasmine_expect(jasmine, phone.dialtone_entered == 0);
-            jasmine_expect(jasmine, phone.dialtone_exited == 0);
-            jasmine_expect(jasmine, phone.ringing_entered == 0);
-            jasmine_expect(jasmine, phone.ringing_exited == 0);
-            jasmine_expect(jasmine, phone.talking_entered == 0);
-            jasmine_expect(jasmine, phone.talking_exited == 0);
+            jasmine_expect(jasmine, phone.idle_entered      == 0);
+            jasmine_expect(jasmine, phone.idle_exited       == 0);
+            jasmine_expect(jasmine, phone.busy_entered      == 1);
+            jasmine_expect(jasmine, phone.busy_exited       == 0);
+            jasmine_expect(jasmine, phone.dialtone_entered  == 0);
+            jasmine_expect(jasmine, phone.dialtone_exited   == 0);
+            jasmine_expect(jasmine, phone.ringing_entered   == 0);
+            jasmine_expect(jasmine, phone.ringing_exited    == 0);
+            jasmine_expect(jasmine, phone.talking_entered   == 0);
+            jasmine_expect(jasmine, phone.talking_exited    == 0);
             jasmine_expect(jasmine, phone.voicemail_entered == 1);
-            jasmine_expect(jasmine, phone.voicemail_exited == 0);
+            jasmine_expect(jasmine, phone.voicemail_exited  == 0);
         }
         
         jasmine_it(jasmine, "can initialize to a parent state") {
             e3_hsm_init(&phone.hsm, IDLE, &phone);
             
-            jasmine_expect(jasmine, phone.idle_entered == 1);
-            jasmine_expect(jasmine, phone.idle_exited == 0);
-            jasmine_expect(jasmine, phone.busy_entered == 0);
-            jasmine_expect(jasmine, phone.busy_exited == 0);
-            jasmine_expect(jasmine, phone.dialtone_entered == 0);
-            jasmine_expect(jasmine, phone.dialtone_exited == 0);
-            jasmine_expect(jasmine, phone.ringing_entered == 0);
-            jasmine_expect(jasmine, phone.ringing_exited == 0);
-            jasmine_expect(jasmine, phone.talking_entered == 0);
-            jasmine_expect(jasmine, phone.talking_exited == 0);
+            jasmine_expect(jasmine, phone.idle_entered      == 1);
+            jasmine_expect(jasmine, phone.idle_exited       == 0);
+            jasmine_expect(jasmine, phone.busy_entered      == 0);
+            jasmine_expect(jasmine, phone.busy_exited       == 0);
+            jasmine_expect(jasmine, phone.dialtone_entered  == 0);
+            jasmine_expect(jasmine, phone.dialtone_exited   == 0);
+            jasmine_expect(jasmine, phone.ringing_entered   == 0);
+            jasmine_expect(jasmine, phone.ringing_exited    == 0);
+            jasmine_expect(jasmine, phone.talking_entered   == 0);
+            jasmine_expect(jasmine, phone.talking_exited    == 0);
             jasmine_expect(jasmine, phone.voicemail_entered == 0);
-            jasmine_expect(jasmine, phone.voicemail_exited == 0);
+            jasmine_expect(jasmine, phone.voicemail_exited  == 0);
         }
     
         jasmine_it(jasmine, "can transition to a substate") {
             jasmine_expect(jasmine,
                 e3_hsm_dispatch(&phone.hsm, PICK_UP) == DIALTONE);
                 
-            jasmine_expect(jasmine, phone.idle_entered == 0);
-            jasmine_expect(jasmine, phone.idle_exited == 1);
-            jasmine_expect(jasmine, phone.busy_entered == 1);
-            jasmine_expect(jasmine, phone.busy_exited == 0);
-            jasmine_expect(jasmine, phone.dialtone_entered == 1);
-            jasmine_expect(jasmine, phone.dialtone_exited == 0);
-            jasmine_expect(jasmine, phone.ringing_entered == 0);
-            jasmine_expect(jasmine, phone.ringing_exited == 0);
-            jasmine_expect(jasmine, phone.talking_entered == 0);
-            jasmine_expect(jasmine, phone.talking_exited == 0);
+            jasmine_expect(jasmine, phone.idle_entered      == 0);
+            jasmine_expect(jasmine, phone.idle_exited       == 1);
+            jasmine_expect(jasmine, phone.busy_entered      == 1);
+            jasmine_expect(jasmine, phone.busy_exited       == 0);
+            jasmine_expect(jasmine, phone.dialtone_entered  == 1);
+            jasmine_expect(jasmine, phone.dialtone_exited   == 0);
+            jasmine_expect(jasmine, phone.ringing_entered   == 0);
+            jasmine_expect(jasmine, phone.ringing_exited    == 0);
+            jasmine_expect(jasmine, phone.talking_entered   == 0);
+            jasmine_expect(jasmine, phone.talking_exited    == 0);
             jasmine_expect(jasmine, phone.voicemail_entered == 0);
-            jasmine_expect(jasmine, phone.voicemail_exited == 0);
+            jasmine_expect(jasmine, phone.voicemail_exited  == 0);
         }
     
         jasmine_it(jasmine, "cannot transition if a signal is not permitted") {
             jasmine_expect(jasmine,
                 !e3_hsm_dispatch(&phone.hsm, PICK_UP));
             
-            jasmine_expect(jasmine, phone.idle_entered == 0);
-            jasmine_expect(jasmine, phone.idle_exited == 0);
-            jasmine_expect(jasmine, phone.busy_entered == 0);
-            jasmine_expect(jasmine, phone.busy_exited == 0);
-            jasmine_expect(jasmine, phone.dialtone_entered == 0);
-            jasmine_expect(jasmine, phone.dialtone_exited == 0);
-            jasmine_expect(jasmine, phone.ringing_entered == 0);
-            jasmine_expect(jasmine, phone.ringing_exited == 0);
-            jasmine_expect(jasmine, phone.talking_entered == 0);
-            jasmine_expect(jasmine, phone.talking_exited == 0);
+            jasmine_expect(jasmine, phone.idle_entered      == 0);
+            jasmine_expect(jasmine, phone.idle_exited       == 0);
+            jasmine_expect(jasmine, phone.busy_entered      == 0);
+            jasmine_expect(jasmine, phone.busy_exited       == 0);
+            jasmine_expect(jasmine, phone.dialtone_entered  == 0);
+            jasmine_expect(jasmine, phone.dialtone_exited   == 0);
+            jasmine_expect(jasmine, phone.ringing_entered   == 0);
+            jasmine_expect(jasmine, phone.ringing_exited    == 0);
+            jasmine_expect(jasmine, phone.talking_entered   == 0);
+            jasmine_expect(jasmine, phone.talking_exited    == 0);
             jasmine_expect(jasmine, phone.voicemail_entered == 0);
-            jasmine_expect(jasmine, phone.voicemail_exited == 0);
+            jasmine_expect(jasmine, phone.voicemail_exited  == 0);
         }
     
         jasmine_it(jasmine, "can transition to a sibling state") {
             jasmine_expect(jasmine,
                 e3_hsm_dispatch(&phone.hsm, DIAL) == RINGING);
                 
-            jasmine_expect(jasmine, phone.idle_entered == 0);
-            jasmine_expect(jasmine, phone.idle_exited == 0);
-            jasmine_expect(jasmine, phone.busy_entered == 0);
-            jasmine_expect(jasmine, phone.busy_exited == 0);
-            jasmine_expect(jasmine, phone.dialtone_entered == 0);
-            jasmine_expect(jasmine, phone.dialtone_exited == 1);
-            jasmine_expect(jasmine, phone.ringing_entered == 1);
-            jasmine_expect(jasmine, phone.ringing_exited == 0);
-            jasmine_expect(jasmine, phone.talking_entered == 0);
-            jasmine_expect(jasmine, phone.talking_exited == 0);
+            jasmine_expect(jasmine, phone.idle_entered      == 0);
+            jasmine_expect(jasmine, phone.idle_exited       == 0);
+            jasmine_expect(jasmine, phone.busy_entered      == 0);
+            jasmine_expect(jasmine, phone.busy_exited       == 0);
+            jasmine_expect(jasmine, phone.dialtone_entered  == 0);
+            jasmine_expect(jasmine, phone.dialtone_exited   == 1);
+            jasmine_expect(jasmine, phone.ringing_entered   == 1);
+            jasmine_expect(jasmine, phone.ringing_exited    == 0);
+            jasmine_expect(jasmine, phone.talking_entered   == 0);
+            jasmine_expect(jasmine, phone.talking_exited    == 0);
             jasmine_expect(jasmine, phone.voicemail_entered == 0);
-            jasmine_expect(jasmine, phone.voicemail_exited == 0);
+            jasmine_expect(jasmine, phone.voicemail_exited  == 0);
         }
         
         jasmine_it(jasmine, "invokes entry and exit when changing states") {
             jasmine_expect(jasmine,
                 e3_hsm_dispatch(&phone.hsm, ANSWER) == TALKING);
                 
-            jasmine_expect(jasmine, phone.idle_entered == 0);
-            jasmine_expect(jasmine, phone.idle_exited == 0);
-            jasmine_expect(jasmine, phone.busy_entered == 0);
-            jasmine_expect(jasmine, phone.busy_exited == 0);
-            jasmine_expect(jasmine, phone.dialtone_entered == 0);
-            jasmine_expect(jasmine, phone.dialtone_exited == 0);
-            jasmine_expect(jasmine, phone.ringing_entered == 0);
-            jasmine_expect(jasmine, phone.ringing_exited == 1);
-            jasmine_expect(jasmine, phone.talking_entered == 1);
-            jasmine_expect(jasmine, phone.talking_exited == 0);
+            jasmine_expect(jasmine, phone.idle_entered      == 0);
+            jasmine_expect(jasmine, phone.idle_exited       == 0);
+            jasmine_expect(jasmine, phone.busy_entered      == 0);
+            jasmine_expect(jasmine, phone.busy_exited       == 0);
+            jasmine_expect(jasmine, phone.dialtone_entered  == 0);
+            jasmine_expect(jasmine, phone.dialtone_exited   == 0);
+            jasmine_expect(jasmine, phone.ringing_entered   == 0);
+            jasmine_expect(jasmine, phone.ringing_exited    == 1);
+            jasmine_expect(jasmine, phone.talking_entered   == 1);
+            jasmine_expect(jasmine, phone.talking_exited    == 0);
             jasmine_expect(jasmine, phone.voicemail_entered == 0);
-            jasmine_expect(jasmine, phone.voicemail_exited == 0);
+            jasmine_expect(jasmine, phone.voicemail_exited  == 0);
         }
         
         jasmine_it(jasmine, "does not invoke when not changing states") {
             jasmine_expect(jasmine,
                 e3_hsm_dispatch(&phone.hsm, BEEP) == TALKING);
                 
-            jasmine_expect(jasmine, phone.idle_entered == 0);
-            jasmine_expect(jasmine, phone.idle_exited == 0);
-            jasmine_expect(jasmine, phone.busy_entered == 0);
-            jasmine_expect(jasmine, phone.busy_exited == 0);
-            jasmine_expect(jasmine, phone.dialtone_entered == 0);
-            jasmine_expect(jasmine, phone.dialtone_exited == 0);
-            jasmine_expect(jasmine, phone.ringing_entered == 0);
-            jasmine_expect(jasmine, phone.ringing_exited == 0);
-            jasmine_expect(jasmine, phone.talking_entered == 0);
-            jasmine_expect(jasmine, phone.talking_exited == 0);
+            jasmine_expect(jasmine, phone.idle_entered      == 0);
+            jasmine_expect(jasmine, phone.idle_exited       == 0);
+            jasmine_expect(jasmine, phone.busy_entered      == 0);
+            jasmine_expect(jasmine, phone.busy_exited       == 0);
+            jasmine_expect(jasmine, phone.dialtone_entered  == 0);
+            jasmine_expect(jasmine, phone.dialtone_exited   == 0);
+            jasmine_expect(jasmine, phone.ringing_entered   == 0);
+            jasmine_expect(jasmine, phone.ringing_exited    == 0);
+            jasmine_expect(jasmine, phone.talking_entered   == 0);
+            jasmine_expect(jasmine, phone.talking_exited    == 0);
             jasmine_expect(jasmine, phone.voicemail_entered == 0);
-            jasmine_expect(jasmine, phone.voicemail_exited == 0);
+            jasmine_expect(jasmine, phone.voicemail_exited  == 0);
         }
         
         jasmine_it(jasmine, "inherits signals from parent states") {
             jasmine_expect(jasmine,
                 e3_hsm_dispatch(&phone.hsm, HANG_UP) == IDLE);
                 
-            jasmine_expect(jasmine, phone.idle_entered == 1);
-            jasmine_expect(jasmine, phone.idle_exited == 0);
-            jasmine_expect(jasmine, phone.busy_entered == 0);
-            jasmine_expect(jasmine, phone.busy_exited == 1);
-            jasmine_expect(jasmine, phone.dialtone_entered == 0);
-            jasmine_expect(jasmine, phone.dialtone_exited == 0);
-            jasmine_expect(jasmine, phone.ringing_entered == 0);
-            jasmine_expect(jasmine, phone.ringing_exited == 0);
-            jasmine_expect(jasmine, phone.talking_entered == 0);
-            jasmine_expect(jasmine, phone.talking_exited == 1);
+            jasmine_expect(jasmine, phone.idle_entered      == 1);
+            jasmine_expect(jasmine, phone.idle_exited       == 0);
+            jasmine_expect(jasmine, phone.busy_entered      == 0);
+            jasmine_expect(jasmine, phone.busy_exited       == 1);
+            jasmine_expect(jasmine, phone.dialtone_entered  == 0);
+            jasmine_expect(jasmine, phone.dialtone_exited   == 0);
+            jasmine_expect(jasmine, phone.ringing_entered   == 0);
+            jasmine_expect(jasmine, phone.ringing_exited    == 0);
+            jasmine_expect(jasmine, phone.talking_entered   == 0);
+            jasmine_expect(jasmine, phone.talking_exited    == 1);
             jasmine_expect(jasmine, phone.voicemail_entered == 0);
-            jasmine_expect(jasmine, phone.voicemail_exited == 0);
+            jasmine_expect(jasmine, phone.voicemail_exited  == 0);
         }
     }
 }
