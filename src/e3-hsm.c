@@ -41,7 +41,7 @@ leave(e3_hsm_t *hsm, unsigned long ancestry) {
 }
 
 void
-e3_hsm_init(e3_hsm_t *hsm, const e3_hsm_state_t * const state, void *cookie) {
+e3_hsm_create(e3_hsm_t *hsm, const e3_hsm_state_t * const state, void *cookie) {
     hsm->state = 0;
     hsm->cookie = cookie;
     enter(hsm, state);
@@ -61,3 +61,7 @@ e3_hsm_dispatch(e3_hsm_t *hsm, e3_hsm_signal_t signal) {
     return to;
 }
 
+extern void
+e3_hsm_delete(e3_hsm_t *hsm) {
+    leave(hsm, 0);
+}

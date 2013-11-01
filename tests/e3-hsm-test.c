@@ -147,8 +147,8 @@ e3_hsm_test(jasmine_t *jasmine) {
         
         }
 
-        jasmine_it(jasmine, "can initialize to a child state") {
-            e3_hsm_init(&phone.hsm, VOICEMAIL, &phone);
+        jasmine_it(jasmine, "can create with a child state") {
+            e3_hsm_create(&phone.hsm, VOICEMAIL, &phone);
             
             jasmine_expect(jasmine, phone.idle_entered      == 0);
             jasmine_expect(jasmine, phone.idle_exited       == 0);
@@ -164,8 +164,25 @@ e3_hsm_test(jasmine_t *jasmine) {
             jasmine_expect(jasmine, phone.voicemail_exited  == 0);
         }
         
-        jasmine_it(jasmine, "can initialize to a parent state") {
-            e3_hsm_init(&phone.hsm, IDLE, &phone);
+        jasmine_it(jasmine, "can delete from a child state") {
+            e3_hsm_delete(&phone.hsm);
+            
+            jasmine_expect(jasmine, phone.idle_entered      == 0);
+            jasmine_expect(jasmine, phone.idle_exited       == 0);
+            jasmine_expect(jasmine, phone.busy_entered      == 0);
+            jasmine_expect(jasmine, phone.busy_exited       == 1);
+            jasmine_expect(jasmine, phone.dialtone_entered  == 0);
+            jasmine_expect(jasmine, phone.dialtone_exited   == 0);
+            jasmine_expect(jasmine, phone.ringing_entered   == 0);
+            jasmine_expect(jasmine, phone.ringing_exited    == 0);
+            jasmine_expect(jasmine, phone.talking_entered   == 0);
+            jasmine_expect(jasmine, phone.talking_exited    == 0);
+            jasmine_expect(jasmine, phone.voicemail_entered == 0);
+            jasmine_expect(jasmine, phone.voicemail_exited  == 1);
+        }
+        
+        jasmine_it(jasmine, "can create with a parent state") {
+            e3_hsm_create(&phone.hsm, IDLE, &phone);
             
             jasmine_expect(jasmine, phone.idle_entered      == 1);
             jasmine_expect(jasmine, phone.idle_exited       == 0);
