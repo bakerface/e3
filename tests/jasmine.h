@@ -26,6 +26,10 @@
 
 #include <stdio.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define JASMINE_STATE_BEFORE   0
 #define JASMINE_STATE_IT       1
 #define JASMINE_STATE_AFTER    2
@@ -92,10 +96,6 @@
         (jasmine)->group = JASMINE_GROUP_PASSED; \
         (jasmine)->expects++; \
     }
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 typedef struct jasmine {
     const char *reason;

@@ -24,6 +24,10 @@
 #ifndef E3_HSM_H_
 #define E3_HSM_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define E3_PERMIT_NONE
 
 #define E3_SIGNAL_AS_VOID(name)
@@ -107,10 +111,6 @@
         E3_SUBSTATE_AS_FUNCTION, E3_PERMIT_AS_CASE)                 \
     HSM(E3_SIGNAL_AS_VOID, E3_STATE_AS_STRUCT,                      \
         E3_SUBSTATE_AS_STRUCT, E3_PERMIT_AS_VOID)
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 typedef void (*e3_hsm_function_t)(void *cookie);
 typedef unsigned long e3_hsm_signal_t;
