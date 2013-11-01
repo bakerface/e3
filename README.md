@@ -27,14 +27,14 @@ A few examples are:
 - If RAM can be reduced, it must be.
 
 ### Style and formatting
-- Source code should use (4) spaces instead of tabs.
+- Source code must use (4) spaces instead of tabs.
 - A single line of source must be 80 columns wide or less.
 - Function modifiers and return types must be line separated from the function name and arguments.
 
 ### Portability and maintainability
 - Source code should be as portable and strict as possible.
 - There must be 100% line, function, and branch coverage.
-- No function may have a complexity higher than 3.
+- All functions must have a complexity less than four.
 - Functions and variables should be declared as static unless required to be global.
 
 
