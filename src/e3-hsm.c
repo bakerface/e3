@@ -64,7 +64,7 @@ e3_hsm_dispatch(e3_hsm_t *hsm, e3_hsm_signal_t signal) {
     return to;
 }
 
-extern void
+void
 e3_hsm_delete(e3_hsm_t *hsm) {
     leave(hsm, ANCESTRY_NONE);
 }
