@@ -23,6 +23,9 @@
 
 #include <e3-hsm.h>
 
+#define INVALID_STATE 0
+#define ANCESTRY_NONE 0UL
+
 static void
 enter(e3_hsm_t *hsm, const e3_hsm_state_t * const state) {
     if (hsm->state != state) {
@@ -42,7 +45,7 @@ leave(e3_hsm_t *hsm, unsigned long ancestry) {
 
 void
 e3_hsm_create(e3_hsm_t *hsm, const e3_hsm_state_t * const state, void *cookie) {
-    hsm->state = 0;
+    hsm->state = INVALID_STATE;
     hsm->cookie = cookie;
     enter(hsm, state);
 }
@@ -63,5 +66,5 @@ e3_hsm_dispatch(e3_hsm_t *hsm, e3_hsm_signal_t signal) {
 
 extern void
 e3_hsm_delete(e3_hsm_t *hsm) {
-    leave(hsm, 0);
+    leave(hsm, ANCESTRY_NONE);
 }

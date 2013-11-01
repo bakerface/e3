@@ -21,6 +21,7 @@
 #
 #
 
+CC       := gcc
 CCTARGET := libe3.a
 CCTEST   := test
 
@@ -161,18 +162,18 @@ complexity: $(CCFILES)
 
 %.o: %.c
 	@echo CC $@
-	@cc -o $@ -c $(CCFLAGS) $(CCPATH) $<
+	@$(CC) -o $@ -c $(CCPATH) $<
 
 %.to: %.c
 	@echo CC $@
-	@cc -o $@ -c $(CCTFLAGS) $(CCPATH) $<
+	@$(CC) -o $@ -c $(CCTFLAGS) $(CCPATH) $<
 
 $(CCTCOV): $(CCTEST)
 	@./$<
 	@lcov -b . -d . -c -o $@ >/dev/null
 
 $(CCTEST): $(CCTOBJS)
-	@cc -o $@ $^ $(LIBS)
+	@$(CC) -o $@ $^ $(LIBS)
 
 $(CCTARGET): $(CCOBJS)
 	@echo AR $@
