@@ -91,8 +91,8 @@ e3_timer_test(jasmine_t *jasmine) {
             e3_timer_create(&test.timer_1, 0,
                 (e3_timer_function_t) triple, &test);
                 
-            e3_timer_create(&test.timer_2,
-                0, (e3_timer_function_t) increment, &test);
+            e3_timer_create(&test.timer_2, 0,
+                (e3_timer_function_t) increment, &test);
                 
             jasmine_expect(jasmine, test.counter == 0);
             e3_timer_delete(&test.timer_1);
