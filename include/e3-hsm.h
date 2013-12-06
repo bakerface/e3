@@ -125,11 +125,10 @@ typedef struct e3_hsm_state {
 
 typedef struct e3_hsm {
     const e3_hsm_state_t *state;
-    void *cookie;
 } e3_hsm_t;
 
 extern void
-e3_hsm_create(e3_hsm_t *hsm, const e3_hsm_state_t * const state, void *cookie);
+e3_hsm_create(e3_hsm_t *hsm, const e3_hsm_state_t * const state);
 
 extern const e3_hsm_state_t *
 e3_hsm_dispatch(e3_hsm_t *hsm, e3_hsm_signal_t signal);

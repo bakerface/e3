@@ -148,7 +148,7 @@ e3_hsm_test(jasmine_t *jasmine) {
         }
 
         jasmine_it(jasmine, "can create with a child state") {
-            e3_hsm_create(&phone.hsm, VOICEMAIL, &phone);
+            e3_hsm_create(&phone.hsm, VOICEMAIL);
             
             jasmine_expect(jasmine, phone.idle_entered      == 0);
             jasmine_expect(jasmine, phone.idle_exited       == 0);
@@ -182,7 +182,7 @@ e3_hsm_test(jasmine_t *jasmine) {
         }
         
         jasmine_it(jasmine, "can create with a parent state") {
-            e3_hsm_create(&phone.hsm, IDLE, &phone);
+            e3_hsm_create(&phone.hsm, IDLE);
             
             jasmine_expect(jasmine, phone.idle_entered      == 1);
             jasmine_expect(jasmine, phone.idle_exited       == 0);

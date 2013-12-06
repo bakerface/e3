@@ -31,22 +31,21 @@ enter(e3_hsm_t *hsm, const e3_hsm_state_t * const state) {
     if (hsm->state != state) {
         enter(hsm, state->parent);
         hsm->state = state;
-        hsm->state->enter(hsm->cookie);
+        hsm->state->enter(hsm);
     }
 }
 
 static void
 leave(e3_hsm_t *hsm, unsigned long ancestry) {
     while (hsm->state && hsm->state->ancestry != ancestry) {
-        hsm->state->exit(hsm->cookie);
+        hsm->state->exit(hsm);
         hsm->state = hsm->state->parent;
     }
 }
 
 void
-e3_hsm_create(e3_hsm_t *hsm, const e3_hsm_state_t * const state, void *cookie) {
+e3_hsm_create(e3_hsm_t *hsm, const e3_hsm_state_t * const state) {
     hsm->state = INVALID_STATE;
-    hsm->cookie = cookie;
     enter(hsm, state);
 }
 
