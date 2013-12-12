@@ -1,40 +1,72 @@
-# README
-E3 is a minimalistic freestanding architecture intended to jump-start bare-metal embedded C projects.
-The goal of E3 is to provide a portable C framework with a tiny footprint.
+# E3
 
-## Building and testing
-The test suite and the build system are coupled in a Makefile.
-To clone the project, build it, and run the test suite, run the following commands:
+E3 is a minimalistic freestanding architecture intended to jump-start bare-metal embedded C projects. The goal of E3 is to provide a portable C framework with a tiny footprint.
 
-~~~
+## Table of Contents
+
+- [Installation](#installation)
+- [Getting the source](#getting-the-source)
+- [Running the tests](#running-the-tests)
+- [Checking code coverage](#checking-code-coverage)
+- [Checking code complexity](#checking-code-complexity)
+- [Creating an archive](#creating-an-archive)
+- [Timer API](#timer-api)
+  - [e3_timer_interrupt](##void-e3_timer_interruptvoid)
+
+## Getting the source
+To download the latest source, clone the GIT repository:
+
+```
 git clone https://github.com/bakerface/e3.git
-cd e3
+```
+
+This will create a directory named *e3* in your working directory.
+
+## Running the tests
+To execute the unit tests, run the following:
+
+```
 make
-~~~
+```
 
-There are additional build targets that you may specify to make.
-A few examples are:
+This will execute each test and print the test statistics to your console window.
 
-- 'make archive' to create a static library of the source
-- 'make complexity' to print the cyclomatic complexity statistics
-- 'make coverage' to run the tests and generate code coverage statistics (default)
+## Checking code coverage
+To generate code coverage statistics, run the following:
 
-## Guidelines
+```
+make coverage
+```
 
-### Minimalism and simplicity
-- If a function or object can be simplified, it should be.
-- If ROM can be reduced, it should be.
-- If RAM can be reduced, it must be.
+This will generate a directory named *coverage* containing the code coverage statistics in HTML format. Simply open *index.html* in a web browser to view the coverage statistics. *Please note that each function must have 100% line, function, and branch coverage in order to be pushed to the repository.*
 
-### Style and formatting
-- Source code must use (4) spaces instead of tabs.
-- A single line of source must be 80 columns wide or less.
-- Function modifiers and return types must be line separated from the function name and arguments.
+## Checking code complexity
+To generate code complexity metrics, run the following:
 
-### Portability and maintainability
-- Source code should be as portable and strict as possible.
-- There must be 100% line, function, and branch coverage.
-- All functions must have a complexity less than four.
-- Functions and variables should be declared as static unless required to be global.
+```
+make complexity
+```
 
+This will dump a table to your console window showing cyclomatic complexity and other useful statistics for each function. *Please note that each function must have a cyclomatic complexity less than five in order to be pushed to the repository.*
 
+## Creating an archive
+To generate a static archive of the code, run the following:
+
+```
+make archive
+```
+
+This will create a file named *libe3.a* in the working directory.
+
+## Timer API
+Below is the documentation for each of the timer functions, as well as a few examples showing how to use them.
+
+### *void e3_timer_interrupt(void)*
+This function increments the internal system timer by one clock tick. *Please note that this function should be called from a timer interrupt service routine at a predefined interval.*
+
+``` c
+static void
+timer_isr(void) {
+    e3_timer_interrupt();
+}
+```
