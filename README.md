@@ -11,7 +11,8 @@ E3 is a minimalistic freestanding architecture intended to jump-start bare-metal
 - [Checking code complexity](#checking-code-complexity)
 - [Creating an archive](#creating-an-archive)
 - [Timer API](#timer-api)
-  - [e3_timer_interrupt](##void-e3_timer_interruptvoid)
+  - [e3_timer_interrupt](#void-e3_timer_interruptvoid)
+  - [e3_timer_tick](#e3_timer_ticks_t-e3_timer_tickvoid)
 
 ## Getting the source
 To download the latest source, clone the GIT repository:
