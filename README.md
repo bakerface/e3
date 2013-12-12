@@ -70,3 +70,18 @@ timer_isr(void) {
     e3_timer_interrupt();
 }
 ```
+
+### *e3_timer_ticks_t e3_timer_tick(void)*
+This function uses the internal system timer to determine which (if any) timers have expired. If a timer has expired, the timer function is invoked and the timer is deleted. This function will return the idle time (in ticks) before the next timer is expected to expire, or zero if there are no timers scheduled. *Please note that this function should not be called from an interrupt service routine since there are no guarentees for its execution time. This function should be invoked at a predefined interval in the application.*
+
+``` c
+static int
+main(void) {
+    while (e3_timer_tick()) {
+        puts("there are still timers pending");
+    }
+    
+    puts("all timers have expired");
+    return 0;
+}
+```
