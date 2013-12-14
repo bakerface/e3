@@ -162,7 +162,7 @@ complexity: $(CCFILES)
 
 %.o: %.c
 	@echo CC $@
-	@$(CC) -o $@ -c $(CCPATH) $<
+	@$(CC) -o $@ -c $(CCFLAGS) $(CCPATH) $<
 
 %.to: %.c
 	@echo CC $@
