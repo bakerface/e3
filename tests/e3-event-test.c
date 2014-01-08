@@ -32,8 +32,8 @@ typedef struct test {
 } test_t;
 
 static void
-callback(void *hint, void *args) {
-    int amount = (int) hint;
+callback(void *cookie, void *args) {
+    int amount = (int) cookie;
     test_t *test = (test_t *) args;
     test->count += amount;
 }

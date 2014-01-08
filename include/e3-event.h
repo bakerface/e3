@@ -35,7 +35,7 @@ typedef struct e3_event_listener {
     struct e3_event_listener *next;
     e3_event_t *event;
     e3_event_handler_t function;
-    void *hint;
+    void *cookie;
 } e3_event_listener_t;
 
 struct e3_event {
@@ -53,7 +53,7 @@ e3_event_fire(e3_event_t *event, void *args);
 
 extern void
 e3_event_listener_create(e3_event_listener_t *listener, e3_event_t *event,
-    e3_event_handler_t function, void *hint);
+    e3_event_handler_t function, void *cookie);
 
 extern void
 e3_event_listener_delete(e3_event_listener_t *listener);

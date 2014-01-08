@@ -22,6 +22,13 @@ E3 is a minimalistic freestanding architecture intended to jump-start bare-metal
   - [e3_hsm_dispatch](#e3_hsm_dispatch)
   - [e3_hsm_delete](#e3_hsm_delete)
   - [Sleep example](#sleep-example)
+- [Event API](#event-api)
+  - [e3_event_create](#e3_event_create)
+  - [e3_event_delete](#e3_event_delete)
+  - [e3_event_fire](#e3_event_fire)
+  - [e3_event_listener_create](#e3_event_listener_create)
+  - [e3_event_listener_delete](#e3_event_listener_delete)
+  - [Event example](#event-example)
 
 ## Getting the source
 To download the latest source, clone the GIT repository:
@@ -149,7 +156,7 @@ This function creates a new instance of a hierarchical state machine and transit
 
 | Parameter                          | Description                              |
 |:-----------------------------------|:-----------------------------------------|
-| hsm_t *hsm                         | The hierarchical state machine to create |
+| e3_hsm_t *hsm                      | The hierarchical state machine to create |
 | const e3_hsm_state_t * const state | The initial state                        |
 
 ### e3_hsm_dispatch
@@ -168,6 +175,9 @@ This function dispatches the specified signal to the hierarchical state machine.
 ### e3_hsm_delete
 This function deletes an instance of a hierarchical state machine and transitions out of the current state.
 
+| Parameter          | Description                                 |
+|:-------------------|:--------------------------------------------|
+| e3_hsm_t *hsm      | The hierarchical state machine to delete    |
 
 ### Sleep Example
 Below is an example showing how to define and use a hierarchical state machine.
@@ -246,6 +256,83 @@ main(void) {
     e3_hsm_dispatch(&hsm, SCREAM);
     e3_hsm_delete(&hsm);
     
+    return 0;
+}
+```
+
+## Event API
+Below is the documentation for each of the event functions, as well as a few examples showing how to use them.
+
+### e3_event_create
+This function creates an event with no listeners.
+
+| Parameter         | Description                                           |
+|:------------------|:------------------------------------------------------|
+| e3_event_t *event | The event to create                                   |
+
+### e3_event_delete
+This function deletes an event and removes all listeners.
+
+| Parameter         | Description                                           |
+|:------------------|:------------------------------------------------------|
+| e3_event_t *event | The event to delete                                   |
+
+### e3_event_fire
+This function fires the event, signaling all listeners.
+
+| Parameter         | Description                                           |
+|:------------------|:------------------------------------------------------|
+| e3_event_t *event | The event to delete                                   |
+| void *arg         | The event argument to pass to the listeners           |
+
+### e3_event_listener_create
+This function creates an event listener and subscribes to an event. *Please note that the listener will be signaled every time the event is fired, and must be deleted to stop receiving the events.*
+
+| Parameter                     | Description                                  |
+|:------------------------------|:---------------------------------------------|
+| e3_event_listener_t *listener | The listener to delete                       |
+| e3_event_t *event             | The event to subscribe to                    |
+| e3_event_handler_t function   | The function called when the event is fired  |
+| void *cookie                  | The user-defined function argument           |
+
+### e3_event_listener_delete
+This function deletes an event listener and unsubscribes from the event.
+
+| Parameter                     | Description                               |
+|:------------------------------|:------------------------------------------|
+| e3_event_listener_t *listener | The listener to delete                    |
+
+### Event Example
+Below is an example showing how to create and use events.
+
+``` c
+#include <stdio.h>
+#include <e3-event.h>
+
+static void
+say(void *cookie, void *arg) {
+    printf("%s: %s\r\n", (const char *) cookie, (const char *) arg);
+}
+
+static int
+main(void) {
+    e3_event_t event;
+    e3_event_listener_t foo;
+    e3_event_listener_t bar;
+
+    e3_event_create(&event);
+    e3_event_fire(&event, "not printed");
+    
+    e3_event_listener_create(&foo, &event, say, "FOO");
+    e3_event_fire(&event, "printed by foo");
+    
+    e3_event_listener_create(&bar, &event, say, "BAR");
+    e3_event_fire(&event, "printed by foo and bar");
+    
+    e3_event_listener_delete(&foo);
+    e3_event_fire(&event, "printed by bar");
+    e3_event_delete(&event);
+
     return 0;
 }
 ```

@@ -42,19 +42,19 @@ e3_event_fire(e3_event_t *event, void *args) {
 
     while (current) {
         next = current->next;
-        current->function(current->hint, args);
+        current->function(current->cookie, args);
         current = next;
     }
 }
 
 void
 e3_event_listener_create(e3_event_listener_t *listener, e3_event_t *event,
-    e3_event_handler_t function, void *hint) {
+    e3_event_handler_t function, void *cookie) {
     
     listener->next = event->listeners;
     listener->event = event;
     listener->function = function;
-    listener->hint = hint;
+    listener->cookie = cookie;
     
     event->listeners = listener;
 }
