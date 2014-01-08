@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2013 - Christopher M. Baker
+# Copyright (c) 2013, 2014 - Christopher M. Baker
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to
@@ -133,13 +133,15 @@ CCTFLAGS := $(CCFLAGS) \
 CCPATH   := -Iinclude
 
 CCFILES  := src/e3-timer.c \
-            src/e3-hsm.c
+            src/e3-hsm.c \
+            src/e3-event.c
 
 CCOBJS   := $(CCFILES:.c=.o)
 
 CCTOBJS  := $(CCFILES:.c=.to) \
             tests/e3-timer-test.o \
             tests/e3-hsm-test.o \
+            tests/e3-event-test.o \
             tests/e3-test.o
             
 CCTCOV   := $(CCTEST).cov

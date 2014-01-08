@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2014 - Christopher M. Baker
+ * Copyright (c) 2014 - Christopher M. Baker
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -21,22 +21,46 @@
  *
  */
 
-#include "e3-timer-test.h"
-#include "e3-hsm-test.h"
-#include "e3-event-test.h"
-#include "jasmine.h"
+#ifndef E3_EVENT_H_
+#define E3_EVENT_H_
 
-int main(void) {
-    jasmine_t jasmine;
-    jasmine_init(&jasmine);
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-    e3_timer_test(&jasmine);
-    e3_hsm_test(&jasmine);
-    e3_event_test(&jasmine);
+typedef void (*e3_event_handler_t)(void *hint, void *args);
+typedef struct e3_event e3_event_t;
 
-    printf("jasmine: %u passed, %u failed, %u ignored, %u expects\r\n",
-        jasmine.passed, jasmine.failed, jasmine.ignored, jasmine.expects);
+typedef struct e3_event_listener {
+    struct e3_event_listener *next;
+    e3_event_t *event;
+    e3_event_handler_t function;
+    void *hint;
+} e3_event_listener_t;
 
-    return jasmine.failed;
+struct e3_event {
+    e3_event_listener_t *listeners;
+};
+
+extern void
+e3_event_create(e3_event_t *event);
+
+extern void
+e3_event_delete(e3_event_t *event);
+
+extern void
+e3_event_fire(e3_event_t *event, void *args);
+
+extern void
+e3_event_listener_create(e3_event_listener_t *listener, e3_event_t *event,
+    e3_event_handler_t function, void *hint);
+
+extern void
+e3_event_listener_delete(e3_event_listener_t *listener);
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif /* E3_EVENT_H_ */
 
