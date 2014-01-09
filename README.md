@@ -15,20 +15,20 @@ E3 is a minimalistic freestanding architecture intended to jump-start bare-metal
   - [e3_timer_tick](#e3_timer_tick)
   - [e3_timer_create](#e3_timer_create)
   - [e3_timer_delete](#e3_timer_delete)
-  - [Timer example](#timer-example)
+  - [Example](#timer-example)
 - [Hierarchical State Machine API](#hierarchical-state-machine-api)
   - [E3_HSM_DEFINE](#e3_hsm_define)
   - [e3_hsm_create](#e3_hsm_create)
   - [e3_hsm_dispatch](#e3_hsm_dispatch)
   - [e3_hsm_delete](#e3_hsm_delete)
-  - [Sleep example](#sleep-example)
+  - [Example](#hierarchical-state-machine-example)
 - [Event API](#event-api)
   - [e3_event_create](#e3_event_create)
   - [e3_event_delete](#e3_event_delete)
   - [e3_event_fire](#e3_event_fire)
   - [e3_event_listener_create](#e3_event_listener_create)
   - [e3_event_listener_delete](#e3_event_listener_delete)
-  - [Event example](#event-example)
+  - [Example](#event-example)
 
 ## Getting the source
 To download the latest source, clone the GIT repository:
@@ -179,7 +179,7 @@ This function deletes an instance of a hierarchical state machine and transition
 |:-------------------|:--------------------------------------------|
 | e3_hsm_t *hsm      | The hierarchical state machine to delete    |
 
-### Sleep Example
+### Hierarchical State Machine Example
 Below is an example showing how to define and use a hierarchical state machine.
 
 ``` c
