@@ -161,6 +161,9 @@ coverage: $(CCTCOV)
 
 complexity: $(CCFILES)
 	@pmccabe -v -c $^
+	
+size: $(CCTARGET)
+	@size $<
 
 %.o: %.c
 	@echo CC $@

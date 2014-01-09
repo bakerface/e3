@@ -10,6 +10,7 @@ E3 is a minimalistic freestanding architecture intended to jump-start bare-metal
 - [Checking code coverage](#checking-code-coverage)
 - [Checking code complexity](#checking-code-complexity)
 - [Creating an archive](#creating-an-archive)
+- [Checking object size](#checking-object-size)
 - [Timer API](#timer-api)
   - [e3_timer_interrupt](#e3_timer_interrupt)
   - [e3_timer_tick](#e3_timer_tick)
@@ -74,6 +75,15 @@ make archive
 ```
 
 This will create a file named *libe3.a* in the working directory.
+
+## Checking object size
+To generate object size statistics, run the following:
+
+```
+make size
+```
+
+This will dump a table to your console window showing the size of each section of the archive per object file. *Please note that to maintain the minimalistic nature of the framework, the source should be designed in such a way as to minimize the size of each section.*
 
 ## Timer API
 Below is the documentation for each of the timer functions, as well as a few examples showing how to use them.
