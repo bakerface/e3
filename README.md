@@ -290,7 +290,7 @@ This function creates an event listener and subscribes to an event. *Please note
 
 | Parameter                     | Description                                  |
 |:------------------------------|:---------------------------------------------|
-| e3_event_listener_t *listener | The listener to delete                       |
+| e3_event_listener_t *listener | The listener to create                       |
 | e3_event_t *event             | The event to subscribe to                    |
 | e3_event_handler_t function   | The function called when the event is fired  |
 | void *cookie                  | The user-defined function argument           |
