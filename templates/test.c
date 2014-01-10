@@ -41,8 +41,8 @@ e3_##type##_test(jasmine_t *jasmine) {
             e3_##type##_delete(&test.##type##);
         }
 
-        jasmine_it(jasmine, "") {
-            /* jasmine_expect(jasmine, 0); */
+        jasmine_it(jasmine, "has been implemented") {
+            jasmine_expect(jasmine, 0);
         }
     }
 }
