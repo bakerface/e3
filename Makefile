@@ -27,6 +27,11 @@ CCTEST   := test
 CCFILES  := $(wildcard src/*.c)
 CCTFILES := $(wildcard tests/*.c)
 
+SRCFILES := $(wildcard include/*.h) \
+            $(wildcard src/*.c) \
+            $(wildcard tests/*.h) \
+            $(wildcard tests/*.c)
+
 CCFLAGS  := -ansi \
             -ffreestanding \
             -fmessage-length=0 \
@@ -163,6 +168,10 @@ complexity: $(CCFILES)
 .PHONY: size
 size: $(CCTARGET)
 	@size $<
+
+.PHONY: tidy
+tidy: $(SRCFILES)
+	@sed -i 's/\s*$$/'"`echo \\\r`/" $(SRCFILES)
 
 %.o: %.c
 	@echo CC $@
