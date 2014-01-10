@@ -1,6 +1,11 @@
 # Object files
 *.o
 *.ko
+*.to
+
+# GCOV files
+*.gcda
+*.gcno
 
 # Libraries
 *.lib
@@ -16,3 +21,8 @@
 *.exe
 *.out
 *.app
+
+# E3 specific
+test
+test.cov
+coverage/
