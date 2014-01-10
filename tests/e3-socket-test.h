@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2014 - Christopher M. Baker
+ * Copyright (c) 2014 - Christopher M. Baker
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -21,24 +21,21 @@
  *
  */
 
-#include "e3-timer-test.h"
-#include "e3-hsm-test.h"
-#include "e3-event-test.h"
-#include "e3-socket-test.h"
+#ifndef E3_SOCKET_TEST_H_
+#define E3_SOCKET_TEST_H_
+
 #include "jasmine.h"
 
-int main(void) {
-    jasmine_t jasmine;
-    jasmine_init(&jasmine);
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-    e3_timer_test(&jasmine);
-    e3_hsm_test(&jasmine);
-    e3_event_test(&jasmine);
-    e3_socket_test(&jasmine);
+extern void
+e3_socket_test(jasmine_t *jasmine);
 
-    printf("jasmine: %u passed, %u failed, %u ignored, %u expects\r\n",
-        jasmine.passed, jasmine.failed, jasmine.ignored, jasmine.expects);
-
-    return jasmine.failed;
+#ifdef __cplusplus
 }
+#endif
+
+#endif /* E3_SOCKET_TEST_H_ */
 

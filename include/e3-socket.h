@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2014 - Christopher M. Baker
+ * Copyright (c) 2014 - Christopher M. Baker
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -21,24 +21,34 @@
  *
  */
 
-#include "e3-timer-test.h"
-#include "e3-hsm-test.h"
-#include "e3-event-test.h"
-#include "e3-socket-test.h"
-#include "jasmine.h"
+#ifndef E3_SOCKET_H_
+#define E3_SOCKET_H_
 
-int main(void) {
-    jasmine_t jasmine;
-    jasmine_init(&jasmine);
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-    e3_timer_test(&jasmine);
-    e3_hsm_test(&jasmine);
-    e3_event_test(&jasmine);
-    e3_socket_test(&jasmine);
+typedef struct e3_socket_interface e3_socket_interface_t;
 
-    printf("jasmine: %u passed, %u failed, %u ignored, %u expects\r\n",
-        jasmine.passed, jasmine.failed, jasmine.ignored, jasmine.expects);
+typedef struct e3_socket {
+    const e3_socket_interface_t *interface;
+} e3_socket_t;
 
-    return jasmine.failed;
+struct e3_socket_interface {
+    void (*connect)(e3_socket_t *socket, const char *host, int port);
+};
+
+#define e3_socket_create(_socket, _interface) \
+    (_socket)->interface = (_interface)
+
+#define e3_socket_connect(_socket, _host, _port) \
+    (_socket)->interface->connect(_socket, _host, _port)
+
+#define e3_socket_delete(_socket)
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif /* E3_SOCKET_H_ */
 

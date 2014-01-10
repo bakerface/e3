@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2014 - Christopher M. Baker
+ * Copyright (c) 2014 - Christopher M. Baker
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -21,24 +21,44 @@
  *
  */
 
-#include "e3-timer-test.h"
-#include "e3-hsm-test.h"
-#include "e3-event-test.h"
 #include "e3-socket-test.h"
-#include "jasmine.h"
+#include <e3-socket.h>
 
-int main(void) {
-    jasmine_t jasmine;
-    jasmine_init(&jasmine);
+typedef struct test {
+    e3_socket_t socket;
+    unsigned int connect;
+} test_t;
 
-    e3_timer_test(&jasmine);
-    e3_hsm_test(&jasmine);
-    e3_event_test(&jasmine);
-    e3_socket_test(&jasmine);
+static void
+test_connect(e3_socket_t *socket, const char *host, int port) {
+    (void) host;
+    (void) port;
 
-    printf("jasmine: %u passed, %u failed, %u ignored, %u expects\r\n",
-        jasmine.passed, jasmine.failed, jasmine.ignored, jasmine.expects);
+    ((test_t *) socket)->connect++;
+}
 
-    return jasmine.failed;
+static const e3_socket_interface_t SOCKET_INTERFACE[] = { {
+    test_connect
+} };
+
+void
+e3_socket_test(jasmine_t *jasmine) {
+    test_t test;
+
+    jasmine_describe(jasmine, "a socket") {
+        jasmine_before(jasmine) {
+            e3_socket_create(&test.socket, SOCKET_INTERFACE);
+            test.connect = 0;
+        }
+
+        jasmine_after(jasmine) {
+            e3_socket_delete(&test.socket);
+        }
+
+        jasmine_it(jasmine, "can connect to host name and port") {
+            e3_socket_connect(&test.socket, "localhost", 80);
+            jasmine_expect(jasmine, test.connect == 1);
+        }
+    }
 }
 
