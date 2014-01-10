@@ -27,8 +27,5 @@
 #define E3_VERSION_MAJOR 1 /* incremented for feature releases */
 #define E3_VERSION_MINOR 0 /* incremented for bug fix releases */
 
-#include "e3-timer.h"
-#include "e3-hsm.h"
-
 #endif /* E3_H_ */
 
