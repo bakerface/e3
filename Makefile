@@ -147,6 +147,10 @@ CCTCOV   := $(CCTEST).cov
 GCOVOBJS := $(CCFILES:.c=.gcno) $(CCFILES:.c=.gcda)
 LIBS     := -lgcov
 
+TYPE_FILE  := $(shell echo $(type) | tr ' ' '-')
+TYPE_VAR   := $(shell echo $(type) | tr ' ' '_')
+TYPE_MACRO := $(shell echo $(TYPE_VAR) | tr 'a-z' 'A-Z')
+
 .PHONY: all
 all: coverage
 
@@ -175,34 +179,34 @@ tidy: $(SRCFILES)
 
 .PHONY: template
 template:
-	@echo include/e3-$(type).h
-	@cp templates/include.h include/e3-$(type).h
+	@echo include/e3-$(TYPE_FILE).h
+	@cp templates/include.h include/e3-$(TYPE_FILE).h
 	
-	@echo src/e3-$(type).c
-	@cp templates/source.c src/e3-$(type).c
+	@echo src/e3-$(TYPE_FILE).c
+	@cp templates/source.c src/e3-$(TYPE_FILE).c
 	
-	@echo tests/e3-$(type)-test.h
-	@cp templates/test.h tests/e3-$(type)-test.h
+	@echo tests/e3-$(TYPE_FILE)-test.h
+	@cp templates/test.h tests/e3-$(TYPE_FILE)-test.h
 	
-	@echo tests/e3-$(type)-test.c
-	@cp templates/test.c tests/e3-$(type)-test.c
+	@echo tests/e3-$(TYPE_FILE)-test.c
+	@cp templates/test.c tests/e3-$(TYPE_FILE)-test.c
 	
-	@sed -i 's/##type##/$(type)/g' \
-		include/e3-$(type).h \
-		src/e3-$(type).c \
-		tests/e3-$(type)-test.h \
-		tests/e3-$(type)-test.c
+	@sed -i 's/##type##/$(TYPE_VAR)/g' \
+		include/e3-$(TYPE_FILE).h \
+		src/e3-$(TYPE_FILE).c \
+		tests/e3-$(TYPE_FILE)-test.h \
+		tests/e3-$(TYPE_FILE)-test.c
 	    
-	@sed -i 's/##TYPE##/'"`echo $(type) | tr 'a-z' 'A-Z'`/g" \
-		include/e3-$(type).h \
-		src/e3-$(type).c \
-		tests/e3-$(type)-test.h \
-		tests/e3-$(type)-test.c
+	@sed -i 's/##TYPE##/$(TYPE_MACRO)/g' \
+		include/e3-$(TYPE_FILE).h \
+		src/e3-$(TYPE_FILE).c \
+		tests/e3-$(TYPE_FILE)-test.h \
+		tests/e3-$(TYPE_FILE)-test.c
 	
 	@echo tests/e3-test.c
-	@sed -i '/#include "jasmine.h"/i#include "e3-$(type)-test.h"'"`echo \\\r`" tests/e3-test.c
+	@sed -i '/#include "jasmine.h"/i#include "e3-$(TYPE_FILE)-test.h"'"`echo \\\r`" tests/e3-test.c
 	    
-	@sed -i '/'"`cat tests/e3-test.c | grep '_test(' | tail -1`"'/a\ \ \ \ e3_$(type)_test(&jasmine);'"`echo \\\r`" tests/e3-test.c
+	@sed -i '/'"`cat tests/e3-test.c | grep '_test(' | tail -1`"'/a\ \ \ \ e3_$(TYPE_VAR)_test(&jasmine);'"`echo \\\r`" tests/e3-test.c
 
 %.o: %.c
 	@echo CC $@
