@@ -28,6 +28,12 @@
 extern "C" {
 #endif
 
+typedef enum e3_socket_flags {
+    E3_SOCKET_FLAGS_READ  = 1,
+    E3_SOCKET_FLAGS_WRITE = 2,
+    E3_SOCKET_FLAGS_ERROR = 4
+} e3_socket_flags_t;
+
 typedef struct e3_socket_interface e3_socket_interface_t;
 
 typedef struct e3_socket {
@@ -36,6 +42,7 @@ typedef struct e3_socket {
 
 struct e3_socket_interface {
     void (*connect)(e3_socket_t *socket, const char *host, int port);
+    e3_socket_flags_t (*poll)(e3_socket_t *socket);
 };
 
 #define e3_socket_create(_socket, _interface) \
@@ -43,6 +50,9 @@ struct e3_socket_interface {
 
 #define e3_socket_connect(_socket, _host, _port) \
     (_socket)->interface->connect(_socket, _host, _port)
+    
+#define e3_socket_poll(_socket) \
+    (_socket)->interface->poll(_socket)
 
 #define e3_socket_delete(_socket)
 

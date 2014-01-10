@@ -25,6 +25,7 @@
 #include "e3-hsm-test.h"
 #include "e3-event-test.h"
 #include "e3-socket-test.h"
+#include "e3-tcp-client-test.h"
 #include "jasmine.h"
 
 int main(void) {
@@ -35,6 +36,7 @@ int main(void) {
     e3_hsm_test(&jasmine);
     e3_event_test(&jasmine);
     e3_socket_test(&jasmine);
+    e3_tcp_client_test(&jasmine);
 
     printf("jasmine: %u passed, %u failed, %u ignored, %u expects\r\n",
         jasmine.passed, jasmine.failed, jasmine.ignored, jasmine.expects);
