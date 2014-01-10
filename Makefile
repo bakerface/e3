@@ -171,7 +171,7 @@ size: $(CCTARGET)
 
 .PHONY: tidy
 tidy: $(SRCFILES)
-	@sed -i 's/\s*$$/'"`echo \\\r`/" $(SRCFILES)
+	@sed -i 's/\s*$$/'"`echo \\\r`/" $^
 
 %.o: %.c
 	@echo CC $@
