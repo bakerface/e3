@@ -173,6 +173,37 @@ size: $(CCTARGET)
 tidy: $(SRCFILES)
 	@sed -i 's/\s*$$/'"`echo \\\r`/" $^
 
+.PHONY: template
+template:
+	@echo include/e3-$(type).h
+	@cp templates/include.h include/e3-$(type).h
+	
+	@echo src/e3-$(type).c
+	@cp templates/source.c src/e3-$(type).c
+	
+	@echo tests/e3-$(type)-test.h
+	@cp templates/test.h tests/e3-$(type)-test.h
+	
+	@echo tests/e3-$(type)-test.c
+	@cp templates/test.c tests/e3-$(type)-test.c
+	
+	@sed -i 's/##type##/$(type)/g' \
+		include/e3-$(type).h \
+		src/e3-$(type).c \
+		tests/e3-$(type)-test.h \
+		tests/e3-$(type)-test.c
+	    
+	@sed -i 's/##TYPE##/'"`echo $(type) | tr 'a-z' 'A-Z'`/g" \
+		include/e3-$(type).h \
+		src/e3-$(type).c \
+		tests/e3-$(type)-test.h \
+		tests/e3-$(type)-test.c
+	
+	@echo tests/e3-test.c
+	@sed -i '/#include "jasmine.h"/i#include "e3-$(type)-test.h"'"`echo \\\r`" tests/e3-test.c
+	    
+	@sed -i '/'"`cat tests/e3-test.c | grep '_test(' | tail -1`"'/a\ \ \ \ e3_$(type)_test(&jasmine);'"`echo \\\r`" tests/e3-test.c
+
 %.o: %.c
 	@echo CC $@
 	@$(CC) -o $@ -c $(CCFLAGS) $(CCPATH) $<
