@@ -21,8 +21,8 @@
  *
  */
 
-#ifndef E3_##TYPE##_TEST_H_
-#define E3_##TYPE##_TEST_H_
+#ifndef E3_##MACRO##_TEST_H_
+#define E3_##MACRO##_TEST_H_
 
 #include "jasmine.h"
 
@@ -31,11 +31,11 @@ extern "C" {
 #endif
 
 extern void
-e3_##type##_test(jasmine_t *jasmine);
+e3_##VAR##_test(jasmine_t *jasmine);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* E3_##TYPE##_TEST_H_ */
+#endif /* E3_##MACRO##_TEST_H_ */
 

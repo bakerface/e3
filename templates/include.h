@@ -21,26 +21,26 @@
  *
  */
 
-#ifndef E3_##TYPE##_H_
-#define E3_##TYPE##_H_
+#ifndef E3_##MACRO##_H_
+#define E3_##MACRO##_H_
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct e3_##type## {
+typedef struct e3_##VAR## {
     int todo;
-} e3_##type##_t;
+} e3_##VAR##_t;
 
 extern void
-e3_##type##_create(e3_##type##_t *##type##);
+e3_##VAR##_create(e3_##VAR##_t *##VAR##);
 
 extern void
-e3_##type##_delete(e3_##type##_t *##type##);
+e3_##VAR##_delete(e3_##VAR##_t *##VAR##);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* E3_##TYPE##_H_ */
+#endif /* E3_##MACRO##_H_ */
 

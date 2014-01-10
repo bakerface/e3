@@ -21,24 +21,24 @@
  *
  */
 
-#include "e3-##type##-test.h"
-#include <e3-##type##.h>
+#include "e3-##FILE##-test.h"
+#include <e3-##FILE##.h>
 
 typedef struct test {
-    e3_##type##_t ##type##;
+    e3_##VAR##_t ##VAR##;
 } test_t;
 
 void
-e3_##type##_test(jasmine_t *jasmine) {
+e3_##VAR##_test(jasmine_t *jasmine) {
     test_t test;
 
-    jasmine_describe(jasmine, "a ##type##") {
+    jasmine_describe(jasmine, "a ##TYPE##") {
         jasmine_before(jasmine) {
-            e3_##type##_create(&test.##type##);
+            e3_##VAR##_create(&test.##VAR##);
         }
 
         jasmine_after(jasmine) {
-            e3_##type##_delete(&test.##type##);
+            e3_##VAR##_delete(&test.##VAR##);
         }
 
         jasmine_it(jasmine, "has been implemented") {

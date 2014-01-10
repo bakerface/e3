@@ -191,13 +191,25 @@ template:
 	@echo tests/e3-$(TYPE_FILE)-test.c
 	@cp templates/test.c tests/e3-$(TYPE_FILE)-test.c
 	
-	@sed -i 's/##type##/$(TYPE_VAR)/g' \
+	@sed -i 's/##FILE##/$(TYPE_FILE)/g' \
+		include/e3-$(TYPE_FILE).h \
+		src/e3-$(TYPE_FILE).c \
+		tests/e3-$(TYPE_FILE)-test.h \
+		tests/e3-$(TYPE_FILE)-test.c
+		
+	@sed -i 's/##VAR##/$(TYPE_VAR)/g' \
 		include/e3-$(TYPE_FILE).h \
 		src/e3-$(TYPE_FILE).c \
 		tests/e3-$(TYPE_FILE)-test.h \
 		tests/e3-$(TYPE_FILE)-test.c
 	    
-	@sed -i 's/##TYPE##/$(TYPE_MACRO)/g' \
+	@sed -i 's/##MACRO##/$(TYPE_MACRO)/g' \
+		include/e3-$(TYPE_FILE).h \
+		src/e3-$(TYPE_FILE).c \
+		tests/e3-$(TYPE_FILE)-test.h \
+		tests/e3-$(TYPE_FILE)-test.c
+		
+	@sed -i 's/##TYPE##/$(type)/g' \
 		include/e3-$(TYPE_FILE).h \
 		src/e3-$(TYPE_FILE).c \
 		tests/e3-$(TYPE_FILE)-test.h \

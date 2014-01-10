@@ -21,15 +21,15 @@
  *
  */
 
-#include <e3-##type##.h>
+#include <e3-##FILE##.h>
 
 void
-e3_##type##_create(e3_##type##_t *##type##) {
-    ##type##->todo = 0;
+e3_##VAR##_create(e3_##VAR##_t *##VAR##) {
+    ##VAR##->todo = 0;
 }
 
 void
-e3_##type##_delete(e3_##type##_t *##type##) {
-    ##type##->todo = 0;
+e3_##VAR##_delete(e3_##VAR##_t *##VAR##) {
+    ##VAR##->todo = 0;
 }
 
