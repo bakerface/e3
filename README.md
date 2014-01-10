@@ -11,6 +11,7 @@ E3 is a minimalistic freestanding architecture intended to jump-start bare-metal
 - [Checking code complexity](#checking-code-complexity)
 - [Creating an archive](#creating-an-archive)
 - [Checking object size](#checking-object-size)
+- [Preparing for push](#preparing-for-push)
 - [Timer API](#timer-api)
   - [e3_timer_interrupt](#e3_timer_interrupt)
   - [e3_timer_tick](#e3_timer_tick)
@@ -84,6 +85,15 @@ make size
 ```
 
 This will dump a table to your console window showing the size of each section of the archive per object file. *Please note that to maintain the minimalistic nature of the framework, the source should be designed in such a way as to minimize the size of each section.*
+
+## Preparing for push
+Before pushing code changes to the repository, run the following:
+
+```
+make tidy
+```
+
+This will tidy up all source files to ensure that they meet the formatting requirements and are compatible on all platforms.
 
 ## Timer API
 Below is the documentation for each of the timer functions, as well as a few examples showing how to use them.
