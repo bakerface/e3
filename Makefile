@@ -24,6 +24,8 @@
 CC       := gcc
 CCTARGET := libe3.a
 CCTEST   := test
+CCFILES  := $(wildcard src/*.c)
+CCTFILES := $(wildcard tests/*.c)
 
 CCFLAGS  := -ansi \
             -ffreestanding \
@@ -132,36 +134,33 @@ CCTFLAGS := $(CCFLAGS) \
 
 CCPATH   := -Iinclude
 
-CCFILES  := src/e3-timer.c \
-            src/e3-hsm.c \
-            src/e3-event.c
-
 CCOBJS   := $(CCFILES:.c=.o)
-
 CCTOBJS  := $(CCFILES:.c=.to) \
-            tests/e3-timer-test.o \
-            tests/e3-hsm-test.o \
-            tests/e3-event-test.o \
-            tests/e3-test.o
-            
+            $(CCTFILES:.c=.o)
+
 CCTCOV   := $(CCTEST).cov
 GCOVOBJS := $(CCFILES:.c=.gcno) $(CCFILES:.c=.gcda)
 LIBS     := -lgcov
 
+.PHONY: all
 all: coverage
 
+.PHONY: clean
 clean:
 	@rm -f $(CCTARGET) $(CCOBJS) $(CCTEST) $(CCTOBJS) $(CCTCOV) $(GCOVOBJS)
 	@rm -rf coverage
-	
+
+.PHONY: archive
 archive: $(CCTARGET)
 
 coverage: $(CCTCOV)
 	@genhtml -o $@ $< >/dev/null
 
+.PHONY: complexity
 complexity: $(CCFILES)
 	@pmccabe -v -c $^
-	
+
+.PHONY: size
 size: $(CCTARGET)
 	@size $<
 
