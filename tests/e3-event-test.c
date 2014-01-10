@@ -56,20 +56,20 @@ e3_event_test(jasmine_t *jasmine) {
             e3_event_fire(&test.e, 0);
             jasmine_expect(jasmine, test.count == 0);
         }
-        
+
         jasmine_it(jasmine, "can have a single listener") {
             e3_event_listener_create(&test.a, &test.e, callback, (void *) 1);
             e3_event_fire(&test.e, &test);
             jasmine_expect(jasmine, test.count == 1);
         }
-        
+
         jasmine_it(jasmine, "can have multiple listeners") {
             e3_event_listener_create(&test.a, &test.e, callback, (void *) 1);
             e3_event_listener_create(&test.b, &test.e, callback, (void *) 2);
             e3_event_fire(&test.e, &test);
             jasmine_expect(jasmine, test.count == 3);
         }
-        
+
         jasmine_it(jasmine, "can fire multiple times") {
             e3_event_listener_create(&test.a, &test.e, callback, (void *) 1);
             e3_event_listener_create(&test.b, &test.e, callback, (void *) 2);
@@ -78,7 +78,7 @@ e3_event_test(jasmine_t *jasmine) {
             e3_event_fire(&test.e, &test);
             jasmine_expect(jasmine, test.count == 6);
         }
-        
+
         jasmine_it(jasmine, "can delete a listener") {
             e3_event_listener_create(&test.a, &test.e, callback, (void *) 1);
             e3_event_listener_create(&test.b, &test.e, callback, (void *) 2);
@@ -88,7 +88,7 @@ e3_event_test(jasmine_t *jasmine) {
             e3_event_fire(&test.e, &test);
             jasmine_expect(jasmine, test.count == 4);
         }
-        
+
         jasmine_it(jasmine, "cannot fire once deleted") {
             e3_event_listener_create(&test.a, &test.e, callback, (void *) 1);
             e3_event_listener_create(&test.b, &test.e, callback, (void *) 2);

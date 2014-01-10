@@ -52,7 +52,7 @@ e3_hsm_create(e3_hsm_t *hsm, const e3_hsm_state_t * const state) {
 const e3_hsm_state_t *
 e3_hsm_dispatch(e3_hsm_t *hsm, e3_hsm_signal_t signal) {
     const e3_hsm_state_t *to;
-    
+
     to = hsm->state->transition(signal);
 
     if (to) {

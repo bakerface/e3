@@ -50,12 +50,12 @@ e3_event_fire(e3_event_t *event, void *args) {
 void
 e3_event_listener_create(e3_event_listener_t *listener, e3_event_t *event,
     e3_event_handler_t function, void *cookie) {
-    
+
     listener->next = event->listeners;
     listener->event = event;
     listener->function = function;
     listener->cookie = cookie;
-    
+
     event->listeners = listener;
 }
 
@@ -69,12 +69,12 @@ e3_event_listener_delete(e3_event_listener_t *listener) {
 
     while (current) {
         next = current->next;
-        
+
         if (current != listener) {
             current->next = listener->event->listeners;
             listener->event->listeners = current;
         }
-        
+
         current = next;
     }
 }
