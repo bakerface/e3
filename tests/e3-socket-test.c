@@ -22,56 +22,40 @@
  */
 
 #include "e3-socket-test.h"
+#include "e3-socket-double.h"
 #include <e3-socket.h>
-
-typedef struct test {
-    e3_socket_t socket;
-    unsigned int connect;
-    unsigned int poll;
-} test_t;
-
-static void
-test_connect(e3_socket_t *socket, const char *host, int port) {
-    (void) host;
-    (void) port;
-
-    ((test_t *) socket)->connect++;
-}
-
-static e3_socket_flags_t
-test_poll(e3_socket_t *socket) {
-    ((test_t *) socket)->poll++;
-    return 0;
-}
-
-static const e3_socket_interface_t SOCKET_INTERFACE[] = { {
-    test_connect,
-    test_poll
-} };
 
 void
 e3_socket_test(jasmine_t *jasmine) {
-    test_t test;
+    e3_socket_double_t test;
 
     jasmine_describe(jasmine, "a socket") {
         jasmine_before(jasmine) {
-            e3_socket_create(&test.socket, SOCKET_INTERFACE);
-            test.connect = 0;
-            test.poll = 0;
+            e3_socket_double_create(&test);
         }
 
         jasmine_after(jasmine) {
-            e3_socket_delete(&test.socket);
+            e3_socket_double_delete(&test);
         }
 
         jasmine_it(jasmine, "can connect to host name and port") {
             e3_socket_connect(&test.socket, "localhost", 80);
-            jasmine_expect(jasmine, test.connect == 1);
+            
+            e3_socket_double_set_connected(&test, 0);
+            jasmine_expect(jasmine, !e3_socket_is_connected(&test.socket));
+            
+            e3_socket_double_set_connected(&test, 1);
+            jasmine_expect(jasmine, e3_socket_is_connected(&test.socket));
         }
         
-        jasmine_it(jasmine, "can poll the socket flags") {
-            e3_socket_poll(&test.socket);
-            jasmine_expect(jasmine, test.poll == 1);
+        jasmine_it(jasmine, "can checking for available data") {
+            jasmine_expect(jasmine, e3_socket_is_data_available(&test.socket));
+            
+            e3_socket_double_set_data_available(&test, 0);
+            jasmine_expect(jasmine, !e3_socket_is_data_available(&test.socket));
+            
+            e3_socket_double_set_data_available(&test, 1);
+            jasmine_expect(jasmine, e3_socket_is_data_available(&test.socket));
         }
     }
 }

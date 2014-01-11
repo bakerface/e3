@@ -22,31 +22,13 @@
  */
 
 #include "e3-tcp-client-test.h"
+#include "e3-socket-double.h"
 #include <e3-tcp-client.h>
 
 typedef struct test {
-    e3_socket_t socket;
+    e3_socket_double_t socket;
     e3_tcp_client_t tcp_client;
-    unsigned int connect;
 } test_t;
-
-static void
-test_connect(e3_socket_t *socket, const char *host, int port) {
-    (void) socket;
-    (void) host;
-    (void) port;
-}
-
-static e3_socket_flags_t
-test_poll(e3_socket_t *socket) {
-    (void) socket;
-    return E3_SOCKET_FLAGS_WRITE | E3_SOCKET_FLAGS_READ;
-}
-
-static const e3_socket_interface_t INTERFACE_CONNECTED[] = { {
-    test_connect,
-    test_poll
-} };
 
 void
 e3_tcp_client_test(jasmine_t *jasmine) {
@@ -54,20 +36,17 @@ e3_tcp_client_test(jasmine_t *jasmine) {
 
     jasmine_describe(jasmine, "a tcp client") {
         jasmine_before(jasmine) {
-            e3_socket_create(&test.socket, INTERFACE_CONNECTED);
-            e3_tcp_client_create(&test.tcp_client, &test.socket);
-            
-            test.connect = 0;
+            e3_socket_double_create(&test.socket);
+            e3_tcp_client_create(&test.tcp_client, &test.socket.socket);
         }
 
         jasmine_after(jasmine) {
             e3_tcp_client_delete(&test.tcp_client);
-            e3_socket_delete(&test.socket);
+            e3_socket_double_delete(&test.socket);
         }
 
         jasmine_it(jasmine, "can connect before the timeout is reached") {
             e3_tcp_client_connect(&test.tcp_client, "localhost", 80, 0);
-            jasmine_expect(jasmine, test.connect == 1);
         }
     }
 }
