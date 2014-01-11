@@ -38,6 +38,7 @@ struct e3_socket_interface {
     void (*connect)(e3_socket_t *socket, const char *host, int port);
     int  (*is_connected)(e3_socket_t *socket);
     int  (*is_data_available)(e3_socket_t *socket);
+    int  (*is_error)(e3_socket_t *socket);
 };
 
 #define e3_socket_create(_socket, _interface) \
@@ -45,12 +46,15 @@ struct e3_socket_interface {
 
 #define e3_socket_connect(_socket, _host, _port) \
     (_socket)->interface->connect(_socket, _host, _port)
-    
+
 #define e3_socket_is_connected(_socket) \
     (_socket)->interface->is_connected(_socket)
-    
+
 #define e3_socket_is_data_available(_socket) \
     (_socket)->interface->is_data_available(_socket)
+
+#define e3_socket_is_error(_socket) \
+    (_socket)->interface->is_error(_socket)
 
 #define e3_socket_delete(_socket)
 

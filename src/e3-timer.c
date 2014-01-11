@@ -51,7 +51,7 @@ e3_timer_tick(void) {
             timers = current;
             current->ticks -= ticks;
         }
-        else {
+        else if (current->function) {
             current->function(current->cookie);
         }
 
@@ -78,6 +78,7 @@ e3_timer_delete(e3_timer_t *timer) {
     e3_timer_t *current;
     e3_timer_t *next;
 
+    timer->function = 0;
     current = timers;
     timers = 0;
 

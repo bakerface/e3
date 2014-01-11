@@ -25,9 +25,8 @@
 
 static void
 connect(e3_socket_t *socket, const char *host, int port) {
-    (void) socket;
-    (void) host;
-    (void) port;
+    ((e3_socket_double_t *) socket)->host = host;
+    ((e3_socket_double_t *) socket)->port = port;
 }
 
 static int
@@ -40,9 +39,15 @@ is_data_available(e3_socket_t *socket) {
     return ((e3_socket_double_t *) socket)->is_data_available;
 }
 
+static int
+is_error(e3_socket_t *socket) {
+    return ((e3_socket_double_t *) socket)->is_error;
+}
+
 e3_socket_interface_t E3_SOCKET_DOUBLE[1] = { {
     connect,
     is_connected,
-    is_data_available
+    is_data_available,
+    is_error
 } };
 

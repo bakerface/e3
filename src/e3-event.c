@@ -42,7 +42,11 @@ e3_event_fire(e3_event_t *event, void *args) {
 
     while (current) {
         next = current->next;
-        current->function(current->cookie, args);
+
+        if (current->function) {
+            current->function(current->cookie, args);
+        }
+
         current = next;
     }
 }
@@ -64,6 +68,7 @@ e3_event_listener_delete(e3_event_listener_t *listener) {
     e3_event_listener_t *current;
     e3_event_listener_t *next;
 
+    listener->function = 0;
     current = listener->event->listeners;
     listener->event->listeners = 0;
 

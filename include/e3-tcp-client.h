@@ -25,6 +25,7 @@
 #define E3_TCP_CLIENT_H_
 
 #include <e3-timer.h>
+#include <e3-event.h>
 #include <e3-socket.h>
 
 #ifdef __cplusplus
@@ -33,11 +34,17 @@ extern "C" {
 
 typedef struct e3_tcp_client {
     e3_socket_t *socket;
+    e3_timer_ticks_t poll_interval;
+    e3_event_t connected;
+    e3_event_t timeout;
+    e3_event_t disconnected;
     e3_timer_t poll_timer;
+    e3_timer_t timeout_timer;
 } e3_tcp_client_t;
 
 extern void
-e3_tcp_client_create(e3_tcp_client_t *tcp_client, e3_socket_t *socket);
+e3_tcp_client_create(e3_tcp_client_t *tcp_client, e3_socket_t *socket,
+    e3_timer_ticks_t poll_interval);
 
 extern void
 e3_tcp_client_connect(e3_tcp_client_t *tcp_client, const char *host, int port,

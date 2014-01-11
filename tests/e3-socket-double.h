@@ -32,8 +32,11 @@ extern "C" {
 
 typedef struct e3_socket_double {
     e3_socket_t socket;
+    const char *host;
+    int port;
     int is_connected;
     int is_data_available;
+    int is_error;
 } e3_socket_double_t;
 
 extern e3_socket_interface_t E3_SOCKET_DOUBLE[1];
@@ -41,11 +44,20 @@ extern e3_socket_interface_t E3_SOCKET_DOUBLE[1];
 #define e3_socket_double_create(_socket) \
     e3_socket_create(&(_socket)->socket, E3_SOCKET_DOUBLE)
 
+#define e3_socket_double_set_host(_socket, _value) \
+    (_socket)->host = (_value)
+
+#define e3_socket_double_set_port(_socket, _value) \
+    (_socket)->port = (_value)
+
 #define e3_socket_double_set_connected(_socket, _value) \
     (_socket)->is_connected = (_value)
 
 #define e3_socket_double_set_data_available(_socket, _value) \
     (_socket)->is_data_available = (_value)
+
+#define e3_socket_double_set_error(_socket, _value) \
+    (_socket)->is_error = (_value)
 
 #define e3_socket_double_delete(_socket) \
     e3_socket_delete(&(_socket)->socket)
