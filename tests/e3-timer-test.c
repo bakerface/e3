@@ -86,6 +86,13 @@ e3_timer_test(jasmine_t *jasmine) {
             jasmine_expect(jasmine, !e3_timer_tick());
             jasmine_expect(jasmine, test.counter == 2);
         }
+        
+        jasmine_it(jasmine, "will ignore invalid timer functions") {
+            e3_timer_create(&test.timer_1, 0, 0, 0);
+            jasmine_expect(jasmine, test.counter == 0);
+            jasmine_expect(jasmine, !e3_timer_tick());
+            jasmine_expect(jasmine, test.counter == 0);
+        }
 
         jasmine_it(jasmine, "can delete a timer that has been created") {
             e3_timer_create(&test.timer_1, 0,
