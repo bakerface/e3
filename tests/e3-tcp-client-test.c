@@ -110,7 +110,7 @@ e3_tcp_client_test(jasmine_t *jasmine) {
             jasmine_expect(jasmine, test.disconnected == 0);
         }
 
-        jasmine_it(jasmine, "can timeout when the while connecting") {
+        jasmine_it(jasmine, "can timeout while connecting") {
             e3_tcp_client_connect(&test.client, "localhost", 80, 11);
 
             while (tick());
