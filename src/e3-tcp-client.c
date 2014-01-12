@@ -26,57 +26,57 @@
 #include <unistd.h>
 
 static void
-connecting(e3_tcp_client_t *tcp_client) {
-    if (e3_socket_is_connected(tcp_client->socket)) {
-        e3_timer_delete(&tcp_client->timeout_timer);
-        e3_event_fire(&tcp_client->connected, 0);
+connecting(e3_tcp_client_t *client) {
+    if (e3_socket_is_connected(client->socket)) {
+        e3_timer_delete(&client->timeout_timer);
+        e3_event_fire(&client->connected, 0);
     }
-    else if (e3_socket_is_error(tcp_client->socket)) {
-        e3_timer_delete(&tcp_client->timeout_timer);
-        e3_event_fire(&tcp_client->disconnected, 0);
+    else if (e3_socket_is_error(client->socket)) {
+        e3_timer_delete(&client->timeout_timer);
+        e3_event_fire(&client->disconnected, 0);
     }
     else {
-        e3_timer_create(&tcp_client->poll_timer, tcp_client->poll_interval,
-            (e3_timer_function_t) connecting, tcp_client);
+        e3_timer_create(&client->poll_timer, client->poll_interval,
+            (e3_timer_function_t) connecting, client);
     }
 }
 
 static void
-connect_timeout(e3_tcp_client_t *tcp_client) {
-    e3_timer_delete(&tcp_client->poll_timer);
-    e3_event_fire(&tcp_client->timeout, 0);
+connect_timeout(e3_tcp_client_t *client) {
+    e3_timer_delete(&client->poll_timer);
+    e3_event_fire(&client->timeout, 0);
 }
 
 void
-e3_tcp_client_create(e3_tcp_client_t *tcp_client, e3_socket_t *socket,
+e3_tcp_client_create(e3_tcp_client_t *client, e3_socket_t *socket,
     e3_timer_ticks_t poll_interval) {
 
-    tcp_client->socket = socket;
-    tcp_client->poll_interval = poll_interval;
-    e3_event_create(&tcp_client->connected);
-    e3_event_create(&tcp_client->timeout);
-    e3_event_create(&tcp_client->disconnected);
+    client->socket = socket;
+    client->poll_interval = poll_interval;
+    e3_event_create(&client->connected);
+    e3_event_create(&client->timeout);
+    e3_event_create(&client->disconnected);
 }
 
 void
-e3_tcp_client_connect(e3_tcp_client_t *tcp_client, const char *host, int port,
+e3_tcp_client_connect(e3_tcp_client_t *client, const char *host, int port,
     e3_timer_ticks_t timeout) {
 
-    e3_socket_connect(tcp_client->socket, host, port);
+    e3_socket_connect(client->socket, host, port);
 
-    e3_timer_create(&tcp_client->poll_timer, tcp_client->poll_interval,
-        (e3_timer_function_t) connecting, tcp_client);
+    e3_timer_create(&client->poll_timer, client->poll_interval,
+        (e3_timer_function_t) connecting, client);
 
-    e3_timer_create(&tcp_client->timeout_timer, timeout,
-        (e3_timer_function_t) connect_timeout, tcp_client);
+    e3_timer_create(&client->timeout_timer, timeout,
+        (e3_timer_function_t) connect_timeout, client);
 }
 
 void
-e3_tcp_client_delete(e3_tcp_client_t *tcp_client) {
-    e3_event_delete(&tcp_client->connected);
-    e3_event_delete(&tcp_client->timeout);
-    e3_event_delete(&tcp_client->disconnected);
-    /*e3_timer_delete(&tcp_client->poll_timer);
-    e3_timer_delete(&tcp_client->timeout_timer);*/
+e3_tcp_client_delete(e3_tcp_client_t *client) {
+    e3_event_delete(&client->connected);
+    e3_event_delete(&client->timeout);
+    e3_event_delete(&client->disconnected);
+    e3_timer_delete(&client->poll_timer);
+    e3_timer_delete(&client->timeout_timer);
 }
 

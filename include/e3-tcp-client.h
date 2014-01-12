@@ -43,15 +43,15 @@ typedef struct e3_tcp_client {
 } e3_tcp_client_t;
 
 extern void
-e3_tcp_client_create(e3_tcp_client_t *tcp_client, e3_socket_t *socket,
+e3_tcp_client_create(e3_tcp_client_t *client, e3_socket_t *socket,
     e3_timer_ticks_t poll_interval);
 
 extern void
-e3_tcp_client_connect(e3_tcp_client_t *tcp_client, const char *host, int port,
+e3_tcp_client_connect(e3_tcp_client_t *client, const char *host, int port,
     e3_timer_ticks_t timeout);
 
 extern void
-e3_tcp_client_delete(e3_tcp_client_t *tcp_client);
+e3_tcp_client_delete(e3_tcp_client_t *client);
 
 #ifdef __cplusplus
 }

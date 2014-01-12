@@ -27,7 +27,7 @@
 
 typedef struct test {
     e3_socket_double_t socket;
-    e3_tcp_client_t tcp_client;
+    e3_tcp_client_t client;
     e3_event_listener_t connect_listener;
     e3_event_listener_t timeout_listener;
     e3_event_listener_t disconnect_listener;
@@ -71,18 +71,18 @@ e3_tcp_client_test(jasmine_t *jasmine) {
             e3_socket_double_set_data_available(&test.socket, 0);
             e3_socket_double_set_error(&test.socket, 0);
 
-            e3_tcp_client_create(&test.tcp_client, &test.socket.socket, 0);
+            e3_tcp_client_create(&test.client, &test.socket.socket, 0);
 
             e3_event_listener_create(&test.connect_listener,
-                &test.tcp_client.connected,
+                &test.client.connected,
                 (e3_event_handler_t) connected, &test);
 
             e3_event_listener_create(&test.timeout_listener,
-                &test.tcp_client.timeout,
+                &test.client.timeout,
                 (e3_event_handler_t) timeout, &test);
 
             e3_event_listener_create(&test.disconnect_listener,
-                &test.tcp_client.disconnected,
+                &test.client.disconnected,
                 (e3_event_handler_t) disconnected, &test);
 
             test.connected    = 0;
@@ -94,12 +94,12 @@ e3_tcp_client_test(jasmine_t *jasmine) {
             e3_event_listener_delete(&test.connect_listener);
             e3_event_listener_delete(&test.timeout_listener);
             e3_event_listener_delete(&test.disconnect_listener);
-            e3_tcp_client_delete(&test.tcp_client);
+            e3_tcp_client_delete(&test.client);
             e3_socket_double_delete(&test.socket);
         }
 
         jasmine_it(jasmine, "can connect before the timeout is reached") {
-            e3_tcp_client_connect(&test.tcp_client, "localhost", 80, 11);
+            e3_tcp_client_connect(&test.client, "localhost", 80, 11);
 
             while (tick()) {
                 e3_socket_double_set_connected(&test.socket, 1);
@@ -110,8 +110,8 @@ e3_tcp_client_test(jasmine_t *jasmine) {
             jasmine_expect(jasmine, test.disconnected == 0);
         }
 
-        jasmine_it(jasmine, "can timeout when the timeout is reached") {
-            e3_tcp_client_connect(&test.tcp_client, "localhost", 80, 11);
+        jasmine_it(jasmine, "can timeout when the while connecting") {
+            e3_tcp_client_connect(&test.client, "localhost", 80, 11);
 
             while (tick());
 
@@ -120,8 +120,8 @@ e3_tcp_client_test(jasmine_t *jasmine) {
             jasmine_expect(jasmine, test.disconnected == 0);
         }
 
-        jasmine_it(jasmine, "can disconnect before the timeout is reached") {
-            e3_tcp_client_connect(&test.tcp_client, "localhost", 80, 11);
+        jasmine_it(jasmine, "can disconnect while connecting") {
+            e3_tcp_client_connect(&test.client, "localhost", 80, 11);
 
             while (tick()) {
                 e3_socket_double_set_error(&test.socket, 1);
@@ -130,20 +130,6 @@ e3_tcp_client_test(jasmine_t *jasmine) {
             jasmine_expect(jasmine, test.connected    == 0);
             jasmine_expect(jasmine, test.timeout      == 0);
             jasmine_expect(jasmine, test.disconnected == 1);
-        }
-
-        jasmine_it(jasmine, "can connect before the timeout is reached") {
-            e3_tcp_client_connect(&test.tcp_client, "localhost", 80, 11);
-            e3_socket_double_set_connected(&test.socket, 1);
-            e3_socket_double_set_data_available(&test.socket, 1);
-
-            while (tick()) {
-
-            }
-
-            jasmine_expect(jasmine, test.connected    == 1);
-            jasmine_expect(jasmine, test.timeout      == 0);
-            jasmine_expect(jasmine, test.disconnected == 0);
         }
     }
 }
