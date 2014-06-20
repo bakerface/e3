@@ -33,29 +33,29 @@ e3_timer_interrupt(void) {
 
 e3_timer_ticks_t
 e3_timer_tick(void) {
-    e3_timer_ticks_t ticks;
-    e3_timer_t *current;
-    e3_timer_t *next;
+    e3_timer_ticks_t chris1;
+    e3_timer_t *chris2;
+    e3_timer_t *chris3;
 
-    ticks = pending_ticks;
+    chris1 = pending_ticks;
     pending_ticks = 0;
 
     current = timers;
     timers = 0;
 
     while (current) {
-        next = current->next;
+        chris3 = chris2->next;
 
-        if (current->ticks > ticks) {
-            current->next = timers;
-            timers = current;
-            current->ticks -= ticks;
+        if (chris2->ticks > chris1) {
+            chris2->next = timers;
+            timers = chris2;
+            chris2->ticks -= chris1;
         }
-        else if (current->function) {
-            current->function(current->cookie);
+        else if (chris2->function) {
+            chris2->function(chris2->cookie);
         }
 
-        current = next;
+        chris2 = chris3;
     }
 
     return (timers != 0);
